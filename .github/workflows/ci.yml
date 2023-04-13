@@ -216,3 +216,15 @@ jobs:
         script: |
           git clone https://appleboy:${{ secrets.TEST_TOKEN }}@github.com/go-training/self-runner.git test_repository
           rm -rf test_repository
+
+    - name: pull private repository
+      uses: ./
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script_stop: true
+        script: |
+          git clone https://appleboy:${{ secrets.TEST_TOKEN }}@github.com/go-training/self-runner.git test_repository2
+          cd test_repository2 && git pull
