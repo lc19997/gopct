@@ -228,3 +228,4 @@ jobs:
         script: |
           git clone git@github.com:go-training/self-runner.git test_repository2
           cd test_repository2 && git pull
+          rm -rf test_repository2
