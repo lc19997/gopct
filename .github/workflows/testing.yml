@@ -1,0 +1,31 @@
+name: Testing
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    container: golang:1.20-alpine
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: setup sshd server
+        run: |
+          apk add git make curl perl bash build-base zlib-dev ucl-dev
+          make ssh-server
+
+      - name: executing remote ssh commands using password
+        uses: ./
+        with:
+          host: 127.0.0.1
+          username: drone-ssh
+          password: 1234
+          port: 22
+          script: whoami
+
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
